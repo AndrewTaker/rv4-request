@@ -14,6 +14,7 @@ type MailGunPayload struct {
 	Subject         string
 	Text            string
 	TemplateVersion string // t:version
+	TemplateName    string
 	To              string
 	Tags            []string // o:tag
 }
@@ -27,6 +28,7 @@ func SendMailGunMessageV4(domain, apiKey string, payload *MailGunPayload) (strin
 	}
 	message := mailgun.NewMessage(payload.From, payload.Subject, payload.Text, payload.To)
 	// Set correct template version (language).
+	message.SetTemplate(payload.TemplateName)
 	message.SetTemplateVersion(payload.TemplateVersion)
 	// Add tags.
 	for _, tag := range payload.Tags {

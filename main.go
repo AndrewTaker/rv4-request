@@ -56,6 +56,7 @@ func main() {
 		payload.To = client.Email
 		payload.Tags = append(payload.Tags, translation.Language, campaign.MailgunTemplate)
 		payload.TemplateVersion = translation.Language
+		payload.TemplateName = campaign.MailgunTemplate
 
 		// Create some of statistics variables.
 		// We do not initialize 'ErrorMessage' and 'Success' until after we send message.
@@ -88,7 +89,7 @@ func main() {
 			stats.ErrorMessage = fmt.Sprint(responseError)
 			stats.Success = false
 		} else {
-			WriteLog("INFO", fmt.Sprintf("Message for <%s> was successfully sent. MG message: %s MG id: %s", client.Email, responseMessage, responseID))
+			WriteLog("INFO", fmt.Sprintf("Message for <%s>:%s was successfully sent with %s lang. MG message: %s MG id: %s", client.Email, client.Language, translation.Language, responseMessage, responseID))
 			stats.ErrorMessage = ""
 			stats.Success = true
 		}
